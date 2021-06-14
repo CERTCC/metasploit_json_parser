@@ -9,7 +9,7 @@ from mtsp_parser.repo_manager import RepoManager
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
-hdlr = logging.StreamHandler(sys.stdout)
+hdlr = logging.StreamHandler(sys.stderr)
 logger.addHandler(hdlr)
 
 CONFIGFILE = "./config.yaml"
@@ -32,7 +32,8 @@ if __name__ == '__main__':
     clone_from_ = cfg['GIT_REPO']
     git_branch_ = cfg['GIT_BRANCH']
     jsonfile_ = cfg['JSONFILE']
-    outfile_ = cfg['MTSP_OUTFILE']
+    outfile_cve = cfg['MTSP_OUTFILE_CVE']
+    outfile_all = cfg['MTSP_OUTFILE_ALL']
     nrecs_ = cfg['N_RECS']
 
 
@@ -55,21 +56,38 @@ if __name__ == '__main__':
     df = mtsp_json.json_to_df(jsonfile_)
     logger.info(f"Read {len(df)} records from {jsonfile_}")
 
-    logger.debug(f"Cleaning data")
     df = mtsp_json.clean_df(df)
 
-    df = mtsp_json.only_cves(df)
-    logger.info(f"Filtered to {len(df)} CVE-related records from {jsonfile_}")
+    cve_df = mtsp_json.only_cves(df)
+    logger.info(f"Filtered to {len(cve_df)} CVE-related records from {jsonfile_}")
 
     # output csv
-    logger.info(f"Writing CVE-related records to {outfile_}")
-    df.to_csv(outfile_, index=True)
+    logger.info(f"Writing all records to {outfile_all}")
+    df.to_csv(outfile_all, index=True)
+
+    logger.info(f"Writing CVE-related records to {outfile_cve}")
+    cve_df.to_csv(outfile_cve, index=True)
+
 
     # print stuff
-    df = df.reset_index()
+    # df = df.reset_index()
+    cve_df = cve_df.reset_index()
 
-    logger.info(f"Here are the {nrecs_} most recent records")
-    for record in df.tail(nrecs_).to_dict(orient="records"):
-        logger.info("-"*20)
+    # print()
+    # print()
+    # print(f"=== {nrecs_} most recent records (all references) ===")
+    # for record in df.tail(nrecs_).to_dict(orient="records"):
+    #     print()
+    #     print("-"*20)
+    #     for k,v in record.items():
+    #         print(f"{k}: {v}")
+
+
+    print()
+    print()
+    print(f"=== {nrecs_} most recent CVE-related records ===")
+    for record in cve_df.tail(nrecs_).to_dict(orient="records"):
+        print()
+        print("-"*20)
         for k,v in record.items():
-            logger.info(f"{k}: {v}")
+            print(f"{k}: {v}")

@@ -35,14 +35,16 @@ class RepoManager(object):
             self.clone()
 
     def clone(self):
-        logger.info(f"Cloning {self.url} to {self.workdir}")
+        logger.info(f"Cloning {self.url} to {self.workdir} (might take a while)")
         self.repo.clone_from(url=self.url,to_path=self.workdir,branch=self.branch)
-        logger.info(f"Branch is {self.branch}")
+        logger.debug(f"Cloning complete.")
+        logger.debug(f"Branch is {self.branch}")
 
     def pull(self):
         o = self.repo.remotes.origin
-        logger.info(f"Pulling from {o}")
+        logger.info(f"Pulling from {o.refs.master.name}")
         o.pull()
+        logger.debug(f"Pull complete")
 
 def main():
     pass

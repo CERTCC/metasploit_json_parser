@@ -12,11 +12,11 @@ logger = logging.getLogger(__name__)
 def json_to_df(path):
     logger.debug(f"Reading json data from {path}")
     df = pd.read_json(path,orient="index")
-    logger.info(f"Read {len(df)} records from {path}")
     return df
 
 
 def clean_df(df):
+    logger.debug("Cleaning data")
     cols = ['path', 'name', 'disclosure_date', 'type', 'description', 'platform', 'arch', 'mod_time']
 
     df = df.reset_index().rename(columns={'index': 'filepath'})
@@ -40,9 +40,12 @@ def clean_df(df):
     df3 = df3.sort_values(by="mod_time",ascending=True)
 
     return df3
-
 def only_cves(df):
-    df2 = pd.DataFrame(df.loc[df.index.str.startswith('CVE')])
+    return filter_by_vulid(df, vulid_pfx='CVE')
+
+def filter_by_vulid(df,vulid_pfx="CVE"):
+    logger.debug(f"filtering for {vulid_pfx} records")
+    df2 = pd.DataFrame(df.loc[df.index.str.startswith(vulid_pfx)])
     return df2
 
 
