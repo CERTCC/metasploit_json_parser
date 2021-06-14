@@ -8,7 +8,8 @@ from mtsp_parser import mtsp_json
 from mtsp_parser.repo_manager import RepoManager
 
 logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
+# we now set this in main
+# logger.setLevel(logging.DEBUG)
 hdlr = logging.StreamHandler(sys.stderr)
 logger.addHandler(hdlr)
 
@@ -23,9 +24,21 @@ def read_config(cfgfile):
 if __name__ == '__main__':
     # load config
     cfg = read_config(CONFIGFILE)
+    DEBUG = cfg['DEBUG']
+    VERBOSE = cfg['VERBOSE']
+
+    if DEBUG:
+        logger.setLevel(logging.DEBUG)
+    elif VERBOSE:
+        logger.setLevel(logging.INFO)
+    else:
+        logger.setLevel(logging.WARN)
+
     logger.debug("Config values:")
     for k,v in cfg.items():
         logger.debug(f"\t{k}: {v}")
+
+
 
     local_data_ = cfg['LOCAL_DATA']
     clone_to_ = cfg['CLONE_TARGET']

@@ -6,3 +6,7 @@ JSONFILE: "./DATA/metasploit-framework/db/modules_metadata_base.json"
 MTSP_OUTFILE_CVE: "./DATA/metasploit_cves.csv"
 MTSP_OUTFILE_ALL: "./DATA/metasploit_all_vul_ids.csv"
 N_RECS: 5
+
+# DEBUG=true overrides VERBOSE
+DEBUG: true
+VERBOSE: true
