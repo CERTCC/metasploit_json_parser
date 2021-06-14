@@ -22,9 +22,14 @@ Clone this repository.
 git clone <clone_url_for_this_repo>
 ```
 
+Check out the branch you want (`main` or `develop` depending on your bug tolerance)
+```bash
+git checkout <branch>
+```
+
 Use of a virtual environment such as anaconda is highly 
 recommended to avoid polluting your native python installation
-with possibly incompatible packages.
+with potentially incompatible packages.
 
 This script was written using python 3.9.
 It should probably work for any version 3 python interpreter, although I make no guarantees of that.
