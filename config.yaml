@@ -1,0 +1,7 @@
+GIT_REPO: "https://github.com/rapid7/metasploit-framework.git"
+GIT_BRANCH: "master"
+LOCAL_DATA: "./DATA"
+CLONE_TARGET: "./DATA/metasploit-framework"
+JSONFILE: "./DATA/metasploit-framework/db/modules_metadata_base.json"
+MTSP_OUTFILE: "./DATA/metasploit_cves.csv"
+N_RECS: 5
