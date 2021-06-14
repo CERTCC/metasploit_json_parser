@@ -16,6 +16,12 @@ The code in this repository performs the following tasks:
     
 ## Usage
 
+Clone this repository.
+
+```bash
+git clone <clone_url_for_this_repo>
+```
+
 Use of a virtual environment such as anaconda is highly 
 recommended to avoid polluting your native python installation
 with possibly incompatible packages.
