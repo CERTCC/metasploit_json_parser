@@ -12,21 +12,21 @@ import logging
 logger = logging.getLogger(__name__)
 
 class RepoManager(object):
-    def __init__(self,working_dir,clone_url,branch="master"):
+    def __init__(self, working_dir, clone_url, branch="master"):
         self.workdir = working_dir
         self.url = clone_url
         self.branch = branch
-
-        self.repo = Repo()
+        self.repo = None
 
     def pull_or_clone(self):
         # does the path exist?
-
         if os.path.exists(self.workdir):
             logger.debug(f"Found possible clone at {self.workdir}")
+
             # is it a repo?
+            logger.debug(f"Trying to create a gitpython Repo object from {self.workdir}.")
             r = Repo(self.workdir)
-            assert not r.bare, "Cannot use a bare repository"
+            assert not r.bare, "Sorry, I can not use a bare repository"
 
             logger.info(f"Using repo at {self.workdir}")
             self.repo = r
@@ -36,7 +36,7 @@ class RepoManager(object):
 
     def clone(self):
         logger.info(f"Cloning {self.url} to {self.workdir} (might take a while)")
-        self.repo.clone_from(url=self.url,to_path=self.workdir,branch=self.branch)
+        self.repo = Repo.clone_from(url=self.url, to_path=self.workdir, branch=self.branch)
         logger.debug(f"Cloning complete.")
         logger.debug(f"Branch is {self.branch}")
 
