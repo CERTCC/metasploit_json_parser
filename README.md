@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> This project has been superseded by the [`parse_metasploit_metadata.py`](https://github.com/CERTCC/git_vul_driller?tab=readme-ov-file#parse-metasploit-metadata) in our [`git_vul_driller`](https://github.com/CERTCC/git_vul_driller) project.
+
 # Metasploit Database Parser
 
 The open-source metasploit framework
